@@ -68,10 +68,11 @@ void bfs(int x, int y) {
                 vis[tx][ty] = true;
                 next_node.x = tx;
                 next_node.y = ty;
-
+                q.push(next_node);
+                
                 father[tx][ty].x = cur_node.x;
                 father[tx][ty].y = cur_node.y;
-                q.push(next_node);
+                
 
                 if(i==0)
                     father[tx][ty].pos='D';
