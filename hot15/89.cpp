@@ -1,5 +1,6 @@
 #include<iostream>
 #include<stack>
+#include <vector>
 using namespace std;
 const int N = 25;
 int a[N];
@@ -7,7 +8,7 @@ int b[N];
 int vis[N][N];
 int n;
 int d[4][2] = {{0,1},{0,-1},{1,0},{-1,0}};
-stack<int>st;//记录走过的点
+vector<int>sb;  //记录走过的点
 bool dfs(int x,int y) {
  
     if (x == n - 1 && y == n - 1) {
@@ -25,10 +26,11 @@ bool dfs(int x,int y) {
                continue;
             a[ty]--, b[tx]--;//判断走到该格能否满足要求
             vis[tx][ty] = 1;
-            st.push(tx*n+ty);
+            sb.push_back(tx*n + ty);
             if (dfs(tx, ty))return true;
             //回溯
-            vis[tx][ty] = 0, a[ty]++, b[tx]++, st.pop();
+            vis[tx][ty] = 0, a[ty]++, b[tx]++;
+            sb.pop_back();
     }
     return false;
 }
@@ -37,19 +39,13 @@ int main() {
     for (int i = 0;i < n;i++)cin >> a[i];//北边 a[ty]方向
     for (int i = 0;i < n;i++)cin >> b[i];//西边,a[tx]方向
     vis[0][0] = 1;
-    st.push(0);
+    sb.push_back(0);
     a[0]--,b[0]--;
     
 if (dfs(0, 0)){
-     stack<int>ans;
-    while (!st.empty()) {
-        ans.push(st.top());
-        st.pop();
+    for (int i = 0; i < sb.size(); i++) {
+        cout << sb[i] << " ";
     }
-    while (!ans.empty()) {
-        cout << ans.top() << " ";
-        ans.pop();
-     }
-    }
- return 0;
+    return 0;
+}
 }
